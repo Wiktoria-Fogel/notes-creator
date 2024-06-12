@@ -4,24 +4,34 @@ import { AppColors } from "../../common/colors";
 
 type AppButtonProps = {
   value: string;
-  disabled?: boolean;
+  type?: "primary" | "cancel";
   onClick: () => void;
 };
 
-const AppButton = ({ value, onClick, disabled = false }: AppButtonProps) => {
+const AppButton = ({ value, onClick, type = "primary" }: AppButtonProps) => {
   return (
     <>
       <TouchableOpacity
         style={[
           styles.mainWrapper,
           {
-            backgroundColor: disabled ? AppColors.gray : AppColors.button,
+            backgroundColor:
+              type === "primary" ? AppColors.primary : AppColors.white,
+            borderWidth: type === "primary" ? 0 : 1,
           },
         ]}
-        disabled={disabled}
         onPress={onClick}
       >
-        <Text style={styles.label}>{value}</Text>
+        <Text
+          style={[
+            styles.label,
+            {
+              color: type === "primary" ? AppColors.white : AppColors.dark,
+            },
+          ]}
+        >
+          {value}
+        </Text>
       </TouchableOpacity>
     </>
   );
@@ -31,16 +41,18 @@ export default AppButton;
 
 const styles = StyleSheet.create({
   mainWrapper: {
+    flex: 1,
+    height: 40,
     paddingHorizontal: 16,
     paddingVertical: 8,
+    marginBottom: 8,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: AppColors.button,
+    borderColor: AppColors.gray,
   },
   label: {
     fontSize: 16,
-    color: AppColors.white,
-    fontWeight: "bold",
+    fontWeight: "500",
   },
 });
